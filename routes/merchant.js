@@ -7,30 +7,30 @@ const { Merchant } = require('../models/merchant');
  const multer = require('multer');
  const auth = require('../middleware/auth');
 
- const storage = multer.diskStorage({
-     destination: function (req, file, cb) {
-         cb(null, './uploads/');
-     },
-     filename: function (req, file, cb) {
-         cb(null, Date.now() + file.originalname);
-     }
- });
+//  const storage = multer.diskStorage({
+//      destination: function (req, file, cb) {
+//          cb(null, './uploads/');
+//      },
+//      filename: function (req, file, cb) {
+//          cb(null, Date.now() + file.originalname);
+//      }
+//  });
 
- const fileFilter = (req, file, cb) => {
-     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-         cb(null, true);
-     } else {
-         cb(null,false);
-     }
- }
+//  const fileFilter = (req, file, cb) => {
+//      if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+//          cb(null, true);
+//      } else {
+//          cb(null,false);
+//      }
+//  }
 
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 1024 * 5
-    },
-    fileFilter: fileFilter
-});
+// const upload = multer({
+//     storage: storage,
+//     limits: {
+//         fileSize: 1024 * 1024 * 5
+//     },
+//     fileFilter: fileFilter
+// });
 
 
 //post a new merchant
@@ -133,20 +133,20 @@ router.put('/:id/aboutme', async (req, res) => {
 });
 
 // upload a image
-router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
-   try{
-    const merchant = await Merchant.findByIdAndUpdate(req.params.id, {img: req.file.path});
-    if (!merchant)
-    return res.status(400).send(`The merchant with ID: ${req.params.id} does not exist`);
+// router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
+//    try{
+//     const merchant = await Merchant.findByIdAndUpdate(req.params.id, {img: req.file.path});
+//     if (!merchant)
+//     return res.status(400).send(`The merchant with ID: ${req.params.id} does not exist`);
 
-    console.log(merchant);
+//     console.log(merchant);
 
-    await merchant.save();
-    return res.send(merchant);
-} catch (ex) {
-    return res.status(500).send(`Internal Server Error: ${ex}`);
-}
-});
+//     await merchant.save();
+//     return res.send(merchant);
+// } catch (ex) {
+//     return res.status(500).send(`Internal Server Error: ${ex}`);
+// }
+// });
 
 module.exports = router;
 

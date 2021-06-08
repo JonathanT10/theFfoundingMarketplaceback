@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const { productSchema } = require('./product');
 
 const patronSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: 2, maxlenght: 50 },
     email: { type: String, required: true, minlength: 5, maxlength: 255 },
     password: { type: String, required: true, minlength: 5, maxlength: 1024 },
-    cart: { type: [String]},
-    pastOrders: {type: [String]},
+    cart: { type: [productSchema], default: [] },
+    pastOrders: {type: [productSchema], default: [] },
 });
 
 patronSchema.methods.generateAuthToken = function (){

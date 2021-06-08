@@ -1,0 +1,24 @@
+{
+  "name": "theffoundingmarketplaceback",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonathanT10/theFfoundingMarketplaceback.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JonathanT10/theFfoundingMarketplaceback/issues"
+  },
+  "homepage": "https://github.com/JonathanT10/theFfoundingMarketplaceback#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}

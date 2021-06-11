@@ -10,14 +10,15 @@ const merchantSchema = new mongoose.Schema({
     about: { type: String, minlength: 5, maxlength: 500 },
     category: { type: String },
     hqAddress: { type: String, minlength: 5, maxlength: 1024, required: true },
-    inCountry: { type: Boolean },
-    veteran: {  type: Boolean},
-    fire: { type: Boolean },
-    police: { type: Boolean }
+    inCountry: { type: Boolean, default: false},
+    veteran: {  type: Boolean, default: false},
+    fire: { type: Boolean, default: false },
+    police: { type: Boolean, default: false },
+    isAdmin: { type: Boolean, default: false}
 });
 
 merchantSchema.methods.generateAuthToken = function (){
-    return jwt.sign({ _id: this._id, name: this.name } , config.get('jwtSecret'));
+    return jwt.sign({ _id: this._id, name: this.name, isAdmin: this.isAdmin } , config.get('jwtSecret'));
 };
 
 const Merchant = mongoose.model('Merchant', merchantSchema);;

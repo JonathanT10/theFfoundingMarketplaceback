@@ -6,6 +6,7 @@ const { Merchant } = require('../models/merchant');
  const router = express.Router();
  const multer = require('multer');
  const auth = require('../middleware/auth');
+ const admin = require('../middleware/admin');
 
 //  const storage = multer.diskStorage({
 //      destination: function (req, file, cb) {
@@ -34,7 +35,7 @@ const { Merchant } = require('../models/merchant');
 
 
 //post a new merchant
-router.post('/', async (req, res) => {
+router.post('/',   async (req, res) => {
     try{
         const { error } = validate(req.body)
         if (error) return res.status(400).send(error.details[0].message);
@@ -89,7 +90,7 @@ router.get('/', async (req, res) => {
 }); 
 
 // update inCountry status
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', [auth, admin],  async (req, res) => {
     try{
         const merchant = await Merchant.findByIdAndUpdate(
             req.params.id,
@@ -112,12 +113,12 @@ router.put('/:id', auth, async (req, res) => {
 
 
 // update about section
-router.put('/:id/aboutme', async (req, res) => {
+router.put('/:id/about/', async (req, res) => {
     try{
         const merchant = await Merchant.findByIdAndUpdate(
             req.params.id,
             {
-                about: req.body.aboutMe,
+                about: req.body.about,
             },
         );
 

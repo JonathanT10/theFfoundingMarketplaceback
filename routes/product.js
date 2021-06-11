@@ -30,6 +30,46 @@ const upload = multer({
 
 
 
+//get a product from ID
+router.get('/', async (req, res) => {
+    try{
+         const product = await Product.find();
+
+         if (!product)
+         return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+         return res.send(product);
+    }catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+//get a product from ID
+router.get('/:id', async (req, res) => {
+    try{
+         const product = await Product.findById(req.params.id);
+
+         if (!product)
+         return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+         return res.send(product);
+    }catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+})
+
+router.get('/:_id/merchant',  async (req, res) => {
+    try{
+
+        const product = await Product.find({merchant_id: req.params.id});
+
+        if(!product)
+        return res.status(400).send(`The merchant with id ${req.params.id} does not exist.`);
+        return res.send(product);
+    }catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+
 
 //create new product
  router.post('/', async (req, res) => {

@@ -90,7 +90,7 @@ router.get('/', async (req, res) => {
 }); 
 
 // update inCountry status
-router.put('/:id', [auth, admin],  async (req, res) => {
+router.put('/:id', [auth, admin], async (req, res) => {
     try{
         const merchant = await Merchant.findByIdAndUpdate(
             req.params.id,
@@ -110,6 +110,7 @@ router.put('/:id', [auth, admin],  async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 });
+
 
 
 // update about section

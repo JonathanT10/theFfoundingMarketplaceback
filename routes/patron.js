@@ -1,5 +1,6 @@
 const { Patron } = require('../models/patron');
- const { validate } = require('../models/patron')
+const { Product } = require('../models/product');
+ const { validate } = require('../models/patron');
  const bcrypt = require('bcrypt');
  const express = require('express');
  const router = express.Router();
@@ -62,12 +63,17 @@ router.get('/', async (req, res) => {
 }); 
 
 // add cart to cart of a patron
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id/cart', auth, async (req, res) => {
     try{
         const patron = await Patron.findByIdAndUpdate(
             req.params.id,
             {
-                cart: [req.body.cart],
+                cart: [req.body.name,
+                       req.body.description,
+                       req.body.addressMade,
+                       req.body.price,
+                       req.body.merchantId
+                ],
             },
             { new: true }
         );
@@ -77,7 +83,23 @@ router.put('/:id', auth, async (req, res) => {
 
         await patron.save();
 
-        return res.send(patron);
+        return res.send(patron.cart);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+router.post('/:patronId/cart/:productId', async (req, res) => {
+    try{
+        const patron = await Patron.findById(req.params.patronId);
+        if(!patron) return res.status(400).send(`The patron with id "${req.params.patronId}"does not exist.`);
+
+        const product = await Product .findById(req.params.productId);
+        if(!product) return res.status(400).send(`The product with id "${req.params.productId}" does not exist.`);
+
+        patron.cart.push(product);
+        await patron.save();
+        return res.send(patron.cart);
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }

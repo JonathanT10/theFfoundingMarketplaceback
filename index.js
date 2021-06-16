@@ -6,6 +6,7 @@ const merchant = require('./routes/merchant');
 const patron = require('./routes/patron');
 const auth = require('./routes/auth');
 const product = require('./routes/product');
+const admin = require('./routes/admin');
 
 connectDB();
 
@@ -16,7 +17,8 @@ app.use('/api/merchant/', merchant);
 app.use('/api/patron/', patron);
 app.use('/api/auth/', auth);
 app.use('/api/product/', product);
-app.use('/uploads/', express.static('uploads'))
+app.use('/uploads/', express.static('uploads'));
+app.use('/api/admin/', admin);
 
 
 const port = process.env.PORT || 5000;

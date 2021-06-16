@@ -90,6 +90,29 @@ router.get('/:_id/merchant',  async (req, res) => {
      }
  })
 
+ //add comment to product
+ router.put('/:id', async (req, res) => {
+    try{
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                comment: [req.body.comment]
+            },
+            { new: true }
+        );
+
+        if (!product)
+        return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+
+        await product.save();
+
+        return res.send(product);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+ });
+
+
 // upload a profile image
 router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
     try{

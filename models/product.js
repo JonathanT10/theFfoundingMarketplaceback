@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
     price: { type: String, required: true, minlength: 2},
     merchantId: { type: String, required: true },
     img: { data: Buffer, contentType: String },
+    comment: { type: [String], default: [] }
 });
 
 

@@ -7,6 +7,7 @@ const { Admin } = require('../models/admin');
  const multer = require('multer');
  const auth = require('../middleware/auth');
  const admin = require('../middleware/admin');
+ const { Highlight } = require('../models/higlight')
 
 
 //post a new admin
@@ -61,5 +62,21 @@ router.get('/', async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 }); 
+
+router.post('/:adminId/highus/:highlightId', async (req, res) => {
+    try{
+        const admin = await Admin.findById(req.params.adminId);
+        if(!admin) return res.status(400).send(`The admin with id "${req.params.adminId}"does not exist.`);
+
+        const highlight = await Highlight .findById(req.params.highlightId);
+        if(!highlight) return res.status(400).send(`The highlight with id "${req.params.highlightId}" does not exist.`);
+
+        admin.highUS.push(highlight);
+        await admin.save();
+        return res.send(admin.highUS);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
 
 module.exports = router;

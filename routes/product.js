@@ -56,10 +56,10 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:_id/merchant',  async (req, res) => {
+router.get('/:id/merchant',  async (req, res) => {
     try{
 
-        const product = await Product.find({merchant_id: req.params.id});
+        const product = await Product.find({merchantId: req.params.id});
 
         if(!product)
         return res.status(400).send(`The merchant with id ${req.params.id} does not exist.`);
@@ -127,6 +127,31 @@ router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
  } catch (ex) {
      return res.status(500).send(`Internal Server Error: ${ex}`);
  }
+ });
+
+
+
+
+ router.put('/:id/map', async (req, res) => {
+    try{
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                lat: req.body.lat,
+                lat: req.body.lat
+            },
+            { new: true }
+        );
+
+        if (!product)
+        return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+
+        await product.save();
+
+        return res.send(product);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
  });
 
  module.exports = router;

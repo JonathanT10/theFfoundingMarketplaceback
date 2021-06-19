@@ -3,6 +3,7 @@ const Joi = require('joi');
 const bcrypt = require('bcrypt');
 const { Patron } = require('../models/patron');
 const { Merchant } = require('../models/merchant')
+const { Admin } = require('../models/admin')
 const router = express.Router();
 
 
@@ -52,9 +53,9 @@ router.post('/admin', async (req, res) => {
         if (error) return res.status(400).send(error.details[0].message);
 
         let admin = await Admin.findOne({ email: req.body.email });
-        if (!merchant) return res.status(400).send('Invalid email or password.');
+        if (!admin) return res.status(400).send('Invalid email or password.');
 
-        const validPassword = await bcrypt.compare(req.body.password, merchant.password);
+        const validPassword = await bcrypt.compare(req.body.password, admin.password);
 
         if (!validPassword) return res.status(400).send('Invalid email or password.')
 

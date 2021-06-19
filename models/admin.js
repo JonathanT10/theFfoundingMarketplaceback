@@ -11,7 +11,7 @@ const adminSchema = new mongoose.Schema({
     highVet: { type: [String], default: [] },
     highFire: { type: [String], default: [] },
     highPol: { type: [String], default: [] },
-    isAdmin: { type: Boolean, default: false}
+    isAdmin: { type: Boolean, default: true}
 });
 
 adminSchema.methods.generateAuthToken = function (){

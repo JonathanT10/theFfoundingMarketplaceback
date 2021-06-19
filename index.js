@@ -7,6 +7,7 @@ const patron = require('./routes/patron');
 const auth = require('./routes/auth');
 const product = require('./routes/product');
 const admin = require('./routes/admin');
+const highlight = require('./routes/highlight')
 
 connectDB();
 
@@ -19,6 +20,7 @@ app.use('/api/auth/', auth);
 app.use('/api/product/', product);
 app.use('/uploads/', express.static('uploads'));
 app.use('/api/admin/', admin);
+app.use('/api/highlight/', highlight)
 
 
 const port = process.env.PORT || 5000;

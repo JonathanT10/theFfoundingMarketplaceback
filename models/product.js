@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema({
     merchantId: { type: String, required: true },
     img: { data: Buffer, contentType: String },
     comment: { type: [String], default: [] },
+    reply: { type: [String], default: [] },
     lat: { type: String },
     lng: { type: String }
 });

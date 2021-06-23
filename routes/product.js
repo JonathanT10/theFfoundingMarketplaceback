@@ -111,6 +111,27 @@ router.get('/:id/merchant',  async (req, res) => {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
  });
+  //add reply to comment to product
+  router.put('/:id/reply', async (req, res) => {
+    try{
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                reply: [req.body.reply]
+            },
+            { new: true }
+        );
+
+        if (!product)
+        return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+
+        await product.save();
+
+        return res.send(product);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+ });
 
 
 // upload a profile image

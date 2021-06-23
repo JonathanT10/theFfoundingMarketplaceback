@@ -2,15 +2,16 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const { highlightSchema } = require('./higlight');
 
 const adminSchema = new mongoose.Schema({
     name: { type: String, required: true, minlength: 2, maxlenght: 50 },
     email: { type: String, required: true, minlength: 5, maxlength: 255 },
     password: { type: String, required: true, minlength: 5, maxlength: 1024 },
-    highUS: { type: [String], default: [] },
-    highVet: { type: [String], default: [] },
-    highFire: { type: [String], default: [] },
-    highPol: { type: [String], default: [] },
+    highUS: { type: [highlightSchema], default: [] },
+    highVet: { type: [highlightSchema], default: [] },
+    highFire: { type: [highlightSchema], default: [] },
+    highPol: { type: [highlightSchema], default: [] },
     isAdmin: { type: Boolean, default: true}
 });
 

@@ -89,6 +89,36 @@ router.put('/:id/cart', auth, async (req, res) => {
     }
 });
 
+// empty cart
+router.put('/:id/empty', async (req, res) => {
+    try{
+        const patron = await Patron.findById(req.params.id);
+    if (!patron)
+        return res.status(400).send(`The patron with ID: ${req.params.id} does not exist`);
+        patron.cart.splice(0,patron.cart.length)
+        await patron.save();
+
+        return res.send(patron.cart);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+// add cart to pastOrders of a patron
+router.put('/:id/pastorders', async (req, res) => {
+    try{
+        const patron = await Patron.findById(req.params.id);
+    if (!patron)
+        return res.status(400).send(`The patron with ID: ${req.params.id} does not exist`);
+        patron.pastOrders.push(patron.cart)
+        await patron.save();
+
+        return res.send(patron.pastOrders);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 router.post('/:patronId/cart/:productId', async (req, res) => {
     try{
         const patron = await Patron.findById(req.params.patronId);

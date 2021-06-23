@@ -90,14 +90,13 @@ router.get('/', async (req, res) => {
 }); 
 
 // update inCountry status
-router.put('/:id', [auth, admin], async (req, res) => {
+router.put('/:id',  async (req, res) => {
     try{
         const merchant = await Merchant.findByIdAndUpdate(
             req.params.id,
             {
                 inCountry: req.body.inCountry
             },
-            { new: true }
         );
 
         if (!merchant)

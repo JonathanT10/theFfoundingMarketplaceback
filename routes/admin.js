@@ -55,20 +55,20 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const admin = await Admin.find()
-            .select({ _id: 1, name: 1, email: 1, about: 1, category: 1})
-            return res.send(merchant);
+            .select({ _id: 1, name: 1, email: 1, about: 1, category: 1, highUS: 1, highVet: 1, highFire: 1, highPol: 1,})
+            return res.send(admin);
         
     } catch (ex) {
         return res.status(500).send(`Internal Server Error: ${ex}`);
     }
 }); 
 
-router.post('/:adminId/highus/:highlightId', async (req, res) => {
+router.post('/:adminId/highus/', async (req, res) => {
     try{
         const admin = await Admin.findById(req.params.adminId);
         if(!admin) return res.status(400).send(`The admin with id "${req.params.adminId}"does not exist.`);
 
-        const highlight = await Highlight .findById(req.params.highlightId);
+        const highlight = await Highlight .find();
         if(!highlight) return res.status(400).send(`The highlight with id "${req.params.highlightId}" does not exist.`);
 
         admin.highUS.push(highlight);

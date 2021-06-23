@@ -34,5 +34,15 @@ router.post('/', async (req, res) => {
     }
 })
 
+router.delete('/:id', async (req, res) => {
+    try{
+        const highlight = await Highlight.findByIdAndRemove(req.params.id);
+        if(!highlight)
+        return res.status(400).send(`The highlight with id "${req.params.id}" does not exist.`);
+        return res.send(highlight);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
  
  module.exports = router;

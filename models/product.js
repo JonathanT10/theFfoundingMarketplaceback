@@ -11,7 +11,8 @@ const productSchema = new mongoose.Schema({
     comment: { type: [String], default: [] },
     reply: { type: [String], default: [] },
     lat: { type: String },
-    lng: { type: String }
+    lng: { type: String },
+    merchName: { type: String, required: true },
 });
 
 

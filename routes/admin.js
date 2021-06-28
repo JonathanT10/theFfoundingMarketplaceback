@@ -79,4 +79,19 @@ router.post('/:adminId/highus/', async (req, res) => {
     }
 });
 
+// empty highlight request
+router.put('/:id/empty', async (req, res) => {
+    try{
+        const admin = await Admin.findById(req.params.id);
+    if (!admin)
+        return res.status(400).send(`The admin with ID: ${req.params.id} does not exist`);
+        admin.highUS.splice(0,admin.highUS.length)
+        await admin.save();
+
+        return res.send(admin.highUS);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 module.exports = router;

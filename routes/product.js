@@ -160,7 +160,7 @@ router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
             req.params.id,
             {
                 lat: req.body.lat,
-                lat: req.body.lat
+                lng: req.body.lat
             },
             { new: true }
         );

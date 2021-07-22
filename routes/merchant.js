@@ -110,6 +110,26 @@ router.put('/:id',  async (req, res) => {
     }
 });
 
+router.put('/:id/vet',  async (req, res) => {
+    try{
+        const merchant = await Merchant.findByIdAndUpdate(
+            req.params.id,
+            {
+                veteran: req.body.veteran
+            },
+        );
+
+        if (!merchant)
+        return res.status(400).send(`The merchant with ID: ${req.params.id} does not exist`);
+
+        await merchant.save();
+
+        return res.send(merchant);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 
 
 // update about section

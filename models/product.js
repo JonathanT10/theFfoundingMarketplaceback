@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema({
     lat: { type: String },
     lng: { type: String },
     merchName: { type: String, required: true },
+    category: { type: String },
 });
 
 

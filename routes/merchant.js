@@ -130,6 +130,46 @@ router.put('/:id/vet',  async (req, res) => {
     }
 });
 
+router.put('/:id/fire',  async (req, res) => {
+    try{
+        const merchant = await Merchant.findByIdAndUpdate(
+            req.params.id,
+            {
+                fire: req.body.fire
+            },
+        );
+
+        if (!merchant)
+        return res.status(400).send(`The merchant with ID: ${req.params.id} does not exist`);
+
+        await merchant.save();
+
+        return res.send(merchant);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
+router.put('/:id/police',  async (req, res) => {
+    try{
+        const merchant = await Merchant.findByIdAndUpdate(
+            req.params.id,
+            {
+                police: req.body.police
+            },
+        );
+
+        if (!merchant)
+        return res.status(400).send(`The merchant with ID: ${req.params.id} does not exist`);
+
+        await merchant.save();
+
+        return res.send(merchant);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
+
 
 
 // update about section

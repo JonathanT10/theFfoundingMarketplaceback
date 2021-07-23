@@ -198,5 +198,26 @@ router.put("/uploadmulter/:id", upload.single('img'), async (req, res) => {
     }
  });
 
+ router.put('/:id/cat', async (req, res) => {
+    try{
+        const product = await Product.findByIdAndUpdate(
+            req.params.id,
+            {
+                category: req.body.category
+            },
+            { new: true }
+        );
+
+        if (!product)
+        return res.status(400).send(`The product with ID: ${req.params.id} does not exist`);
+
+        await product.save();
+
+        return res.send(product);
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+ });
+
 
  module.exports = router;
